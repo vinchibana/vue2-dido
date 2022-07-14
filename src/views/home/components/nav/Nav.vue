@@ -1,3 +1,4 @@
+<!-- TODO Chrome浏览器错位问题 -->
 <template>
   <div class="wrapper">
     <van-grid   :column-num="5" :gutter="4" :border="false">
