@@ -1,6 +1,6 @@
 <template>
   <div id="dashboard">
-    <van-tabbar v-model="active" active-color="#76a342" >
+    <van-tabbar v-model="active" active-color="#76a342" class="active_tab" >
       <van-tabbar-item
         :badge="item.name == 'cart' ? goodsNum : ''"
         v-for="(item, index) in tabbars"
@@ -102,6 +102,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 /*转场动画*/
 .router-slider-enter-active,
 .router-slider-leave-active {

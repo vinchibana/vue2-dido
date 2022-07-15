@@ -35,7 +35,7 @@
       :categoriesDetailData="categoriesDetailData"
       :currentSubTitle="currentSubTitle"
       @itemClick="itemClick"
-      @touchClick="touchClick"
+      @touchClick="menuClick"
     />
 
     <section class="r_list" ref="r_list">
@@ -174,7 +174,6 @@ export default {
       let ulContentWidth = this.$refs.ulContent.clientWidth;
       this.isShowDropMenu = ulContentWidth > subTitleWrapperWidth;
     },
-    touchClick(index) {},
     itemClick(index) {
       this.currentSubTitle = index;
       this.subTitleClick(index);

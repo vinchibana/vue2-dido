@@ -7,11 +7,9 @@ import "@/plugins/vant";
 import "@/config/rem";
 import store from './store/store'
 import "./icons";
-
 Vue.config.productionTip = false
-
+Vue.use(waterfall)
 new Vue({
-  waterfall,
   router,
   store,
   render: h => h(App),
