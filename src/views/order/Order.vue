@@ -9,8 +9,8 @@
     <van-contact-card
       :type="address_type"
       add-text="选择收货地址"
-      name="姓名"
-      tel="手机号"
+      :name="address_name"
+      :tel="address_phone"
       @click="chooseAddress"
       style="margin-top: 3rem"
     ></van-contact-card>
@@ -173,6 +173,9 @@
 <script>
 import TimeIntervalList from "@/views/order/children/TimeIntervalList";
 import { mapGetters, mapMutations } from "vuex";
+import PubSub from 'pubsub-js'
+import {CHOOSE_USER_ADDRESS} from "@/config/pubsub_type";
+
 export default {
   name: "Order",
   components: {
@@ -234,7 +237,17 @@ export default {
 
   mounted() {
     this.INIT_SHOP_CART();
-    console.log(this.$store.state);
+    PubSub.subscribe(CHOOSE_USER_ADDRESS,(msg,data) => {
+      if (msg == CHOOSE_USER_ADDRESS) {
+        this.address_type = 'edit';
+        this.address_name = data.name;
+        this.address_phone = data.tel;
+        this.address_id = data.id;
+      }
+    })
+  },
+  beforeDestroy () {
+    PubSub.unsubscribe(CHOOSE_USER_ADDRESS);
   },
   methods: {
     ...mapMutations(["INIT_SHOP_CART"]),
@@ -250,7 +263,9 @@ export default {
     },
     onChange() {},
     onExchange() {},
-    onInput() {},
+    onInput() {
+
+    },
     onSubmit() {},
   },
 };

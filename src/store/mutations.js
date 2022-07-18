@@ -148,10 +148,35 @@ export default {
   },
 
   [LOGIN_OUT](state) {
-    state.userInfo = {}
-    state.shopCart = {}
-    removeLocalStorage('userInfo')
-    removeLocalStorage('shopCart')
-    removeLocalStorage('shippingAddress')
-  }
+    state.userInfo = {};
+    state.shopCart = {};
+    removeLocalStorage("userInfo");
+    removeLocalStorage("shopCart");
+    removeLocalStorage("shippingAddress");
+  },
+
+  [INIT_USER_SHOPPING_ADDRESS](state) {
+    let address = getLocalStorage("shippingAddress");
+    state.shippingAddress = JSON.parse(address) || [];
+  },
+
+  [ADD_USER_SHOPPING_ADDRESS](state,{content}) {
+    state.shippingAddress = [...state.shippingAddress,content]
+    setLocalStorage('shippingAddress',state.shippingAddress)
+  },
+
+  [CHANGE_USER_SHOPPING_ADDRESS](state, { content }) {
+    const index = state.shippingAddress.findIndex(
+      (item) => item.id === content.id
+    );
+    state.shippingAddress.splice(index, 1, content);
+    setLocalStorage("shippingAddress", state.shippingAddress);
+  },
+
+  [DELETE_USER_SHOPPING_ADDRESS](state, { id }) {
+    state.shippingAddress = state.shippingAddress.filter(
+      (item) => item.id !== id
+    );
+    setLocalStorage("shippingAddress", state.shippingAddress);
+  },
 };
