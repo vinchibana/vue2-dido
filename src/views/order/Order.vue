@@ -3,7 +3,7 @@
     <van-nav-bar
       title="填写订单"
       :fixed="true"
-      @click="onClickLeft"
+      @click-left="onClickLeft"
       left-arrow
     ></van-nav-bar>
     <van-contact-card

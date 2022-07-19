@@ -1,5 +1,5 @@
 import ajax from "@/api/ajax";
-const BASE_URL = 'http://127.0.0.1:7300/mock/62a9db33d20bd213f5bb9e42/api/'
+const BASE_URL = 'http://127.0.0.1:7300/mock/62d6c1ee2b1c66cdffb97516/api/'
 
 export const getHomeData = () => ajax(BASE_URL + 'homeApi')
 
