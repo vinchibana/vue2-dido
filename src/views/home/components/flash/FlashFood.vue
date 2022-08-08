@@ -55,7 +55,7 @@ export default {
       } else {
         this.scroll.refresh();
       }
-    }, 300);
+    }, 500);
   },
   computed: {
     ...mapState(["userInfo"]),

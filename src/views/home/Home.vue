@@ -50,7 +50,6 @@ export default {
   methods: {
     async initData() {
       const res = await getHomeData();
-      console.log(res);
       if (res.success) {
         const data = res.data;
         this.sowing_list = data.list[0].icon_list;
