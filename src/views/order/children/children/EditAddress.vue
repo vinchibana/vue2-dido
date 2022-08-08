@@ -35,6 +35,7 @@ export default {
       searchResult: [],
     };
   },
+
   mounted() {
     this.addressInfo = this.$route.params.content;
   },

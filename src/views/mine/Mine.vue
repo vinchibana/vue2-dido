@@ -14,10 +14,11 @@
         center
       >
         <template slot="title">
-          <div class="personMsg" v-if="userInfo.token"></div>
+          <div class="personMsg" ></div>
         </template>
       </van-cell>
     </van-cell-group>
+
   </div>
 </template>
 
@@ -26,6 +27,7 @@ export default {
   name: "Mine",
   data() {
     return {
+      value:'',
       // 头像
       user_image: {
         login_icon: require("./../../images/mine/defaultImg.jpeg"),
@@ -40,8 +42,6 @@ export default {
         { icon: "smile-comment-o", title: "mine.itemsTitle[3]" },
         { icon: "cash-back-record", title: "mine.waitingFeedback" },
       ],
-      // 版本信息
-      version: _VERSION_,
     };
   },
 };

@@ -40,7 +40,7 @@
                   <p class="shopPrice">{{ item.price }}</p>
                   <div class="shopDeal">
                     <span @click="reduceGoods(item.id, item.num)">-</span>
-                    <input type="number" disabled v-model="item.num" />
+                    <input type="number" disabled v-model="item.num"/>
                     <span
                       @click="
                         addGoods(
@@ -103,7 +103,15 @@ export default {
     return {
       youLike_product_lists: [],
       isEmptyCart: false,
+      message:'hello world'
     };
+  },
+  directives:{
+    focus:{
+      inserted:function (el) {
+        el.focus()
+      }
+    }
   },
   mounted() {
     this.initData();

@@ -12,16 +12,16 @@ module.exports = defineConfig({
   lintOnSave: false,
 
   devServer: {
-    port: 8088,
-    open: true,
-    // 改为本地 Easymock
-    // proxy: {
-    //   "/api": {
-    //     target: "https:/api/",
-    //     ws: true,
-    //     changeOrigin: true,
-    //   },
-    // },
+    // port: 8088,
+    // open: true,
+    // 本地 Easymock
+    proxy: {
+      "/api": {
+        target: "https://mock.feup.cn/mock/62f0804d0c348726503f88c0",
+        ws: true,
+        changeOrigin: true,
+      },
+    },
   },
 
   configureWebpack: {

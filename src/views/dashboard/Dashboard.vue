@@ -1,6 +1,6 @@
 <template>
   <div id="dashboard">
-    <van-tabbar v-model="active" active-color="#76a342" class="active_tab" >
+    <van-tabbar v-model="active" active-color="#76a342" class="active_tab">
       <van-tabbar-item
         :badge="item.name == 'cart' ? goodsNum : ''"
         v-for="(item, index) in tabbars"
@@ -15,23 +15,22 @@
         </template>
       </van-tabbar-item>
     </van-tabbar>
-
+    <!-- 缓存组件 -->
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive" />
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive" />
   </div>
-
-
 </template>
 
 <script>
-import {mapMutations, mapState} from "vuex";
+import { mapMutations, mapState } from "vuex";
 export default {
   name: "Dashboard",
   data() {
     return {
       active: 0,
+      // tab 栏项目数组
       tabbars: [
         {
           name: "home",
@@ -90,6 +89,7 @@ export default {
     ...mapState(["userInfo", "shopCart"]),
     goodsNum() {
       let num = 0;
+      // 遍历 state 当中的 shopcart，获得购物车商品数量
       Object.values(this.shopCart).forEach((goods, index) => {
         num += goods.num;
       });
@@ -102,7 +102,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 /*转场动画*/
 .router-slider-enter-active,
 .router-slider-leave-active {

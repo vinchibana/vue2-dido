@@ -11,6 +11,7 @@
     "axios": "^0.27.2",
     "better-scroll": "^1.15.2",
     "core-js": "^3.8.3",
+    "http-proxy-middleware": "^2.0.6",
     "pubsub-js": "^1.9.4",
     "reset-css": "^5.0.1",
     "vant": "^2.2.0",
