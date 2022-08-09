@@ -37,6 +37,7 @@ export default {
   },
   data() {
     return {
+      // 初始化各个组件需要的数据
       isShowLoading: true,
       sowing_list: [],
       nav_list: [],
@@ -49,6 +50,7 @@ export default {
 
   methods: {
     async initData() {
+      // 发送请求获取 homeData，分别赋值给 sowing、nav、flash、tabbar、specialZone 组件
       const res = await getHomeData();
       if (res.success) {
         const data = res.data;

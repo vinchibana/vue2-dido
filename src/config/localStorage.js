@@ -1,3 +1,4 @@
+// 本地存储操作，简单判断和类型转换
 export const setLocalStorage = (name, content) => {
   if (!name) return;
   if (typeof content != "string") {

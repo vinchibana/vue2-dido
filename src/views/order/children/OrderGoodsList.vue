@@ -1,5 +1,5 @@
 <template>
-  <div id="orderGoodsList">dfsfsdf
+  <div id="orderGoodsList">
     <van-nav-bar
       title="商品清单"
       left-arrow

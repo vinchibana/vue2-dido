@@ -2,6 +2,7 @@
   <div class="wrapper">
     <div class="subTitleWrapper" ref="subTitleWrapper">
       <ul ref="ulContent">
+        <!-- 商品分类副标题 -->
         <li
           class="title"
           v-for="(detailItem, index) in categoriesDetailData"
@@ -30,6 +31,7 @@
       </span>
     </div>
 
+    <!-- 下拉菜单（定义两个自定义 click 事件） -->
     <DropMenu
       :menuDown="!menuDown"
       :categoriesDetailData="categoriesDetailData"
@@ -45,10 +47,12 @@
           :key="index"
           ref="good"
         >
+          <!-- 右侧每个 section 的标题-->
           <p class="productCategoryTitle">
             {{ item.name }}
           </p>
           <ul>
+            <!-- 每个商品（商品名、描述、价格） -->
             <li
               v-for="(good, index) in item.products"
               :key="index"
@@ -65,6 +69,7 @@
                   <p class="price">{{ good.price }}</p>
                   <p class="originPrice">{{ item.origin_price }}</p>
 
+                  <!-- 添加购物车按钮（stop 阻止事件继续传播）-->
                   <div class="iconCartWrapper" @click.stop="addToCart(good)">
                     <svg-icon
                       iconClass="car"
@@ -98,17 +103,21 @@ export default {
       arrLi: 0,
       flag: true,
       value: 0,
+      // 菜单箭头
       menuDown: true,
+      // 下拉菜单显示状态
       isShowDropMenu: false,
     };
   },
   mounted() {
+    // 初始化两个滚动
     this.$nextTick(() => {
       this.initTitleScroll();
       this.initProductScroll();
     });
   },
   watch: {
+    // watch 右侧数据，改变时将品类副标题重置为 0，menuDown 重置为 true ……
     categoriesDetailData() {
       this.currentSubTitle = 0;
       this.menuDown = true;
@@ -121,7 +130,7 @@ export default {
   },
   props: ["categoriesDetailData"],
   methods: {
-    ...mapMutations(["ADD_GOODS", "ADD_TO_CART"]),
+    // ...mapMutations(["ADD_GOODS", "ADD_TO_CART"]),
     menuClick() {
       this.isShowDropMenu = true;
       this.menuDown = !this.menuDown;
@@ -132,9 +141,11 @@ export default {
     initTitleScroll() {
       let contentWrapperWidth = 120;
       let el = this.$refs.subTitle;
+      // 累加每个上级分类下的副标题长度
       for (let i = 0; i < el.length; i++) {
         contentWrapperWidth += el[i].clientWidth;
       }
+      // 使 content（ulContent）长度大于 wrapper（subTitleWrapper）长度得以滚动
       this.$refs.ulContent.style.width = contentWrapperWidth + "px";
       if (!this.titleScroll) {
         this.titleScroll = new BScroll(".subTitleWrapper", {
@@ -150,10 +161,9 @@ export default {
     initProductScroll() {
       this.$nextTick(() => {
         if (!this.productScroll) {
-          this.productScroll = new BScroll(this.$refs.r_list, {
+          this.productScroll = new BScroll(this.$refs.r_list, { // 容器
             probeType: 3,
             click: true,
-
             mouseWheel: true,
           });
         } else {
@@ -161,25 +171,35 @@ export default {
         }
       });
     },
+
+    // 点击副标题传递 index，用 refs 取元素，调用 titleScroll 实现点击滚动至相应元素
     subTitleClick(index) {
       this.currentSubTitle = index;
       let el = this.$refs.subTitle[index];
       this.titleScroll.scrollToElement(el, 300);
+      // 同时让商品列表滚动至相应位置
       console.log(this.$refs.good[index]);
       this.productScroll.scrollToElement(this.$refs.good[index], 100, 0);
     },
-    // 控制下拉菜单箭头是否显示
+
+    // 控制下拉菜单箭头是否显示 content 宽度大于 wrapper（即超出无法显示，更多内容通过下拉菜单来显示）
     showDropMenu() {
       let subTitleWrapperWidth = this.$refs.subTitleWrapper.clientWidth;
       let ulContentWidth = this.$refs.ulContent.clientWidth;
       this.isShowDropMenu = ulContentWidth > subTitleWrapperWidth;
     },
+
+    // 点击下拉菜单的项目
     itemClick(index) {
       this.currentSubTitle = index;
+      // 触发副标题点击事件
       this.subTitleClick(index);
       this.menuDown = true;
     },
+
+    // 传递商品对象，解构出 query 参数 路由跳转商详页
     goToGoodsDetail(good) {
+      console.log(good)
       this.$router.push({
         name: "goodsDetail",
         query: {

@@ -2,11 +2,12 @@
   <div id="category">
     <SearchHead />
     <div class="listWrapper" v-if="!isShowLoading">
+      <!-- 左侧分类 -->
       <div class="leftWrapper">
         <ul class="wrapper">
           <li
             class="categoryItem"
-            v-for="(cate,index) in categoriesData"
+            v-for="(cate, index) in categoriesData"
             :key="cate.id"
             ref="menuList"
             :class="{ selected: currentIndex == index }"
@@ -17,10 +18,10 @@
         </ul>
       </div>
 
-      <ContentView :categoriesDetailData="categoriesDetailData"/>
+      <ContentView :categoriesDetailData="categoriesDetailData" />
     </div>
 
-    <Skeleton v-if="isShowLoading"/>
+    <Skeleton v-if="isShowLoading" />
   </div>
 </template>
 
@@ -35,18 +36,26 @@ export default {
   components: {
     SearchHead,
     ContentView,
-    Skeleton
+    Skeleton,
   },
   data() {
     return {
       isShowLoading: true,
-      categoriesData: [],
-      categoriesDetailData: [],
+      categoriesData: [], // 左侧分类数据
+      categoriesDetailData: [], // 右侧详情数据
       currentIndex: 0,
       isShowLoadingGif: false,
     };
   },
 
+  // keep-alive 组件被激活时从 route 中取 push 过来的参数，并 clickLeftLi 方法跳转，实现首页 nav 区点击跳转到相应分类
+  activated() {
+    this.$nextTick(() => {
+      if (this.$route.params.currentIndex > -1) {
+        this.clickLeftLi(this.$route.params.currentIndex + 1);
+      }
+    });
+  },
   mounted() {
     this.initData();
   },
@@ -57,42 +66,45 @@ export default {
         this.categoriesData = leftRes.data.cate;
       }
 
-      let rightRes = await getCategoryDetailData('/lk001');
+      let rightRes = await getCategoryDetailData("/lk001");
       if (rightRes.success) {
         this.categoriesDetailData = rightRes.data.cate;
       }
-      this.isShowLoading = false
+      this.isShowLoading = false;
       this.$nextTick(() => {
         if (!this.leftScroll) {
-          this.leftScroll = new BScroll(".leftWrapper",{
-            probeType:3,
-            click:true,
-            scrollY:true,
-            tap:true,
-            mouseWheel:true
-          })
+          this.leftScroll = new BScroll(".leftWrapper", {
+            probeType: 3,
+            click: true,
+            scrollY: true,
+            tap: true,
+            mouseWheel: true,
+          });
         } else {
-          this.leftScroll.refresh()
+          this.leftScroll.refresh();
         }
-      })
+      });
     },
 
+    // 初始化左侧滚动
     async clickLeftLi(index) {
-      this.currentIndex = index
-      let menuList = this.$refs.menuList
-      let el = menuList[index]
-      this.leftScroll.scrollToElement(el,300)
-      let param
+      this.currentIndex = index;
+      let menuList = this.$refs.menuList;
+      let el = menuList[index];
+      this.leftScroll.scrollToElement(el, 300);
+      // 准备 param 获取 categoryDetailData 数据
+      let param;
       if (index >= 9) {
-        param = `/lk0${index + 1}`
+        param = `/lk0${index + 1}`;
       } else {
-        param = `/lk00${index + 1}`
+        param = `/lk00${index + 1}`;
       }
-      let rightRes = await getCategoryDetailData(param)
+      console.log(param)
+      let rightRes = await getCategoryDetailData(param);
       if (rightRes.success) {
-        this.categoriesDetailData = rightRes.data.cate
+        this.categoriesDetailData = rightRes.data.cate;
       }
-    }
+    },
   },
 };
 </script>

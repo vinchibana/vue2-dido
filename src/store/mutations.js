@@ -16,7 +16,6 @@ import {
 } from "./mutation-type";
 import Vue from "vue";
 import { Toast } from "vant";
-import router from "@/router/index";
 import {
   getLocalStorage,
   removeLocalStorage,
@@ -25,11 +24,14 @@ import {
 import { ADD_TO_CART } from "@/config/pubsub_type";
 
 export default {
+  // ES5风格 使用一个常量作为函数名，相当于 ADD_GOODS(){}
   [ADD_GOODS](state, { goodsID, goodsName, smallImage, goodsPrice }) {
     let shopCart = state.shopCart;
+    // 如果购物车有同类，数量++
     if (shopCart[goodsID]) {
       shopCart[goodsID]["num"]++;
     } else {
+      // 收集解构出的 id 等等赋给 shopCart
       shopCart[goodsID] = {
         num: 1,
         id: goodsID,
@@ -38,6 +40,7 @@ export default {
         smallImage: smallImage,
         checked: true,
       };
+      // Object assign
       state.shopCart = {
         ...shopCart,
       };
@@ -45,9 +48,11 @@ export default {
     setLocalStorage("shopCart", state.shopCart);
   },
 
+  // 初始化购物车
   [INIT_SHOP_CART](state) {
     let initCart = getLocalStorage("shopCart");
     if (initCart) {
+      // 解析本地存储中的 shopCart
       state.shopCart = JSON.parse(initCart);
     }
   },
@@ -67,6 +72,7 @@ export default {
     });
   },
 
+  // 取出 state 中的 shopCart，如果存在 goodsID 同款商品，num--，如果为 0 直接删除
   [REDUCE_GOODS](state, { goodsID }) {
     let shopCart = state.shopCart;
     let goods = shopCart[goodsID];
@@ -77,6 +83,7 @@ export default {
       if (goods["num"] == 0) {
         delete shopCart[goodsID];
       }
+      // Object assign
       state.shopCart = {
         ...shopCart,
       };
@@ -98,10 +105,12 @@ export default {
     };
   },
 
+  // 取出 shopCart 遍历每项的 checked
   [DELETE_SELECT_GOODS](state) {
     let shopCart = state.shopCart;
     Object.values(shopCart).forEach((goods) => {
       if (goods.checked) {
+        // 删除对象属性
         delete shopCart[goods.id];
       }
     });

@@ -19,6 +19,7 @@ export default {
   name: "Nav",
   props: ["nav_list"],
   methods: {
+    //
     gotoCategory(index) {
       this.$router.push({ name: "category", params: { currentIndex: index } });
     },

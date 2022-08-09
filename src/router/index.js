@@ -62,6 +62,7 @@ const router = new Router({
           // 分类
           path: "category",
           name: "category",
+
           component: Category,
           // 是否数据缓存
           meta: {

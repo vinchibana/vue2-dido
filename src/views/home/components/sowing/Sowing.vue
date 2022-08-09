@@ -14,6 +14,7 @@ export default {
   name: "Sowing",
   data() {
     return {
+      // swiper 轮播图配置
       swiperOptions: {
         notNextTick: true,
         pagination: {
@@ -40,6 +41,7 @@ export default {
     swiper,
     swiperSlide,
   },
+  // 轮播图数据数组
   props:['sowing_list']
 };
 </script>

@@ -74,11 +74,13 @@ export default {
 
   methods: {
     ...mapMutations(["INIT_SHOP_CART", "INIT_USER_INFO"]),
+    // 接收 index 改变高亮状态，接收 name 跳转路由
     tab(index, name) {
       this.currentIndex = index;
       this.$router.push(name);
     },
 
+    // 初始化用户数据、购物车数据
     initData() {
       this.INIT_USER_INFO();
       this.INIT_SHOP_CART();
@@ -87,9 +89,9 @@ export default {
 
   computed: {
     ...mapState(["userInfo", "shopCart"]),
+    // 遍历 state 当中的 shopcart，获得购物车商品数量
     goodsNum() {
       let num = 0;
-      // 遍历 state 当中的 shopcart，获得购物车商品数量
       Object.values(this.shopCart).forEach((goods, index) => {
         num += goods.num;
       });
