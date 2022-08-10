@@ -131,13 +131,10 @@ export default {
   props: ["categoriesDetailData"],
   methods: {
     // ...mapMutations(["ADD_GOODS", "ADD_TO_CART"]),
-    menuClick() {
-      this.isShowDropMenu = true;
-      this.menuDown = !this.menuDown;
-    },
     ...mapMutations({
       addToCart: "ADD_TO_CART",
     }),
+
     initTitleScroll() {
       let contentWrapperWidth = 120;
       let el = this.$refs.subTitle;
@@ -161,7 +158,8 @@ export default {
     initProductScroll() {
       this.$nextTick(() => {
         if (!this.productScroll) {
-          this.productScroll = new BScroll(this.$refs.r_list, { // 容器
+          this.productScroll = new BScroll(this.$refs.r_list, {
+            // 容器
             probeType: 3,
             click: true,
             mouseWheel: true,
@@ -172,14 +170,10 @@ export default {
       });
     },
 
-    // 点击副标题传递 index，用 refs 取元素，调用 titleScroll 实现点击滚动至相应元素
-    subTitleClick(index) {
-      this.currentSubTitle = index;
-      let el = this.$refs.subTitle[index];
-      this.titleScroll.scrollToElement(el, 300);
-      // 同时让商品列表滚动至相应位置
-      console.log(this.$refs.good[index]);
-      this.productScroll.scrollToElement(this.$refs.good[index], 100, 0);
+    // 点击下拉菜单箭头
+    menuClick() {
+      this.isShowDropMenu = true;
+      this.menuDown = !this.menuDown;
     },
 
     // 控制下拉菜单箭头是否显示 content 宽度大于 wrapper（即超出无法显示，更多内容通过下拉菜单来显示）
@@ -187,6 +181,17 @@ export default {
       let subTitleWrapperWidth = this.$refs.subTitleWrapper.clientWidth;
       let ulContentWidth = this.$refs.ulContent.clientWidth;
       this.isShowDropMenu = ulContentWidth > subTitleWrapperWidth;
+    },
+
+    // 点击副标题传递 index，用 refs 取元素，调用 titleScroll 实现点击滚动至相应元素
+    subTitleClick(index) {
+      // index 通过 currentSubTitle 传递给 DropMenu 以高亮显示
+      this.currentSubTitle = index;
+      let el = this.$refs.subTitle[index];
+      this.titleScroll.scrollToElement(el, 300);
+      // 同时让商品列表滚动至相应位置
+      console.log(this.$refs.good[index]);
+      this.productScroll.scrollToElement(this.$refs.good[index], 100, 0);
     },
 
     // 点击下拉菜单的项目
@@ -199,7 +204,6 @@ export default {
 
     // 传递商品对象，解构出 query 参数 路由跳转商详页
     goToGoodsDetail(good) {
-      console.log(good)
       this.$router.push({
         name: "goodsDetail",
         query: {

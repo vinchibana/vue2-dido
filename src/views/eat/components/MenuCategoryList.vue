@@ -42,15 +42,17 @@ export default {
   methods: {
     menuTitleClick(index) {
       this.currentMenuTitle = index;
+      // 触发父组件（TodayMenu）自定义事件，传递 index 完成高亮滚动操作
       this.$emit("menuItemClick", index);
+      // 操作“最近找过”数组，小于 8 个时在最前添加新项，大于 8 个从后清理
       if (this.recentlyChooseList.length <= 7) {
         this.recentlyChooseList.unshift(this.todayMenuCategoryList[index]);
-        this.recentlyChooseList = Array.from(new Set(this.recentlyChooseList))
+        // 解决 Duplicate keys detected
+        this.recentlyChooseList = Array.from(new Set(this.recentlyChooseList));
       } else {
         this.recentlyChooseList.pop();
         this.recentlyChooseList.unshift(this.todayMenuCategoryList[index]);
-        this.recentlyChooseList = Array.from(new Set(this.recentlyChooseList))
-
+        this.recentlyChooseList = Array.from(new Set(this.recentlyChooseList));
       }
     },
   },

@@ -6,13 +6,16 @@
     ref="dropMenuWrap"
     @click="touchClick"
   >
+    <!-- 下拉菜单 -->
     <div class="itemWrapper">
       <ul v-for="(item, index) in categoriesDetailData" :key="item.id">
         <li
           class="titleItem"
           @click="itemClick(index)"
-          :class="{selected:currentSubTitle === index}"
-        >{{item.name}}</li>
+          :class="{ selected: currentSubTitle === index }"
+        >
+          {{ item.name }}
+        </li>
       </ul>
     </div>
   </div>
@@ -21,11 +24,15 @@
 <script>
 export default {
   name: "DropMenu",
+  // menuDown 指示、categoriesDetailData 下拉菜单内容、currentSubTitle 指示高亮
   props: ["menuDown", "categoriesDetailData", "currentSubTitle"],
   methods: {
+    // 点击下拉菜单的项目
     itemClick(index) {
       this.$emit("itemClick", index);
     },
+
+    // 点击下拉菜单箭头
     touchClick() {
       this.$emit("touchClick");
     },

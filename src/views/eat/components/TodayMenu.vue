@@ -4,6 +4,7 @@
       <div class="todayMenuWrapper">
         <div class="menuList">
           <ul ref="menuUlContent">
+            <!-- 下拉菜单 -->
             <li
               class="menuItem"
               v-for="(item, index) in todayMenuCategoryList"
@@ -36,7 +37,6 @@
       <MenuCategoryList
         :todayMenuCategoryList="todayMenuCategoryList"
         :isShowMenuList="isShowMenuList"
-        v-on:hiddenMenu="clickAll"
         @menuItemClick="menuItemClick"
       />
     </div>
@@ -52,10 +52,13 @@ export default {
   name: "TodayMenu",
   data() {
     return {
+      // 下拉菜单箭头指示
       menuDown: true,
+      // 下拉菜单显示 flag
       isShowMenuList: false,
       todayMenuCategoryList: [],
       msg: "全部",
+      // 用于
       currentSubTitle: 0,
     };
   },
@@ -69,6 +72,7 @@ export default {
 
   watch: {
     menuDown() {
+      // watch menuDown 的状态
       this.msg = this.menuDown == true ? "全部" : "收起";
     },
   },
@@ -83,15 +87,18 @@ export default {
       }
     },
 
+    // 初始化菜单标题滚动
     initMenuTitleScroll() {
       if (!this.menuTitleScroll) {
         let contentWrapperWidth = 100;
         let el = this.$refs.menuTitle;
+        // 累加标题个数，判断总 content 宽度是否大于 wrapper
         for (let i = 0; i < el.length; i++) {
           contentWrapperWidth += el[i].clientWidth;
         }
+        // menuUlContent 作为内容
         this.$refs.menuUlContent.style.width = contentWrapperWidth + "px";
-        this.menuTitleScroll = new BScroll(".menuList", {
+        this.menuTitleScroll = new BScroll(".menuList", {  // .menuList 作为容器
           probeType: 3,
           startX: 0,
           click: true,
@@ -102,6 +109,7 @@ export default {
       }
     },
 
+    // 点击菜单项将当前 index 传递给 currentSubTitle
     menuItemClick(index) {
       this.currentSubTitle = index;
       let el = this.$refs.menuTitle[index];
@@ -111,6 +119,7 @@ export default {
       }
     },
 
+    // 点击 “全部”
     clickAll() {
       this.menuDown = !this.menuDown;
       this.isShowMenuList = !this.isShowMenuList;

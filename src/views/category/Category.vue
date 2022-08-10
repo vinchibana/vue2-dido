@@ -61,16 +61,18 @@ export default {
   },
   methods: {
     async initData() {
+      // 初始化分类及分类详情数据
       let leftRes = await getCategoryData();
       if (leftRes.success) {
         this.categoriesData = leftRes.data.cate;
       }
-
       let rightRes = await getCategoryDetailData("/lk001");
       if (rightRes.success) {
         this.categoriesDetailData = rightRes.data.cate;
       }
       this.isShowLoading = false;
+
+      // 初始化左侧滚动
       this.$nextTick(() => {
         if (!this.leftScroll) {
           this.leftScroll = new BScroll(".leftWrapper", {
@@ -86,7 +88,7 @@ export default {
       });
     },
 
-    // 初始化左侧滚动
+    // 处理左侧点击，标题滚动置顶
     async clickLeftLi(index) {
       this.currentIndex = index;
       let menuList = this.$refs.menuList;
