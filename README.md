@@ -7,7 +7,7 @@
 * Vue Router
 * Vuex
 * Vant
-* easy-mock（https://mock.feup.cn/）
+* easy-mock（ https://mock.feup.cn ）
 * better-scroll
 * vue-waterfall2
 * pubsub-js
